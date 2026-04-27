@@ -61,7 +61,9 @@ incident-response-ai/
     │
     ├── mcp/
     │   ├── service/
-    │   │   └── CiscoIseMcpServer.java          ← MCP Server (@Tool methods)
+    │   │   ├── CiscoIseMcpServer.java          ← MCP Server wrapper
+    │   │   ├── CiscoIseClient.java             ← [NEW] Gateway interface
+    │   │   └── RestCiscoIseClient.java         ← [NEW] Real REST API impl
     │   └── model/
     │       ├── LogEntry.java                   ← ISE log event model
     │       └── SecurityModels.java             ← Endpoint/Block/Sandbox models
@@ -94,6 +96,7 @@ incident-response-ai/
 | Framework       | Spring Boot 3.3 + Java 21           |
 | AI Orchestration| Spring AI 1.0.0                     |
 | LLM             | Anthropic Claude (claude-sonnet-4)  |
+| HTTP Client     | Spring RestClient (modern & fluent) |
 | MCP Server      | Spring AI MCP Server Starter        |
 | MCP Protocol    | @Tool annotations + stdio/SSE       |
 | Streaming       | Spring MVC SSE (SseEmitter)         |
@@ -228,15 +231,14 @@ These tools are auto-registered by Spring AI's MCP Server Starter and available:
 
 ## Extending to Production
 
-| Area | Production Implementation |
+| Area | Implementation Status |
 |------|--------------------------|
-| MCP Server | Replace simulated methods with real **Cisco ISE ERS API** calls |
-| Firewall | Integrate with **Cisco FMC REST API** for real FTD rule pushes |
-| Persistence | Replace in-memory store with **PostgreSQL** or **Redis** |
-| Auth | Add **OAuth2/JWT** to the REST API |
-| Multi-threat | Run agents in **parallel** for multiple IPs (CompletableFuture) |
-| Notifications | Add **PagerDuty / Slack** webhooks on ESCALATED status |
-| Audit log | Write to **Splunk** or **Elastic** for SIEM integration |
+| **Cisco ISE** | ✅ **Implemented** via `RestCiscoIseClient` (ERS API) |
+| **Firewall** | Integrate with **Cisco FMC REST API** for real FTD rule pushes |
+| **Persistence** | Replace in-memory store with **PostgreSQL** or **Redis** |
+| **Auth** | Add **OAuth2/JWT** to the REST API |
+| **Notifications** | Add **PagerDuty / Slack** webhooks on ESCALATED status |
+| **Audit log** | Write to **Splunk** or **Elastic** for SIEM integration |
 
 ---
 

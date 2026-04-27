@@ -42,7 +42,6 @@ public class RestCiscoIseClient implements CiscoIseClient {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<LogEntry> getSecurityLogs(int count, String severityFilter) {
         log.info("[ISE:REST] Fetching security logs (Note: This is partially simulated as ERS is not a log stream)");
         // In a real scenario, this would likely query a log aggregator or use pxGrid.
