@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,14 +14,13 @@
     <artifactId>incident-response-ai</artifactId>
     <version>1.0.0</version>
     <name>Automated Incident Response AI</name>
-    <description>
-        Agentic AI system for automated network security incident response.
-        Uses a custom Cisco ISE MCP Server + Spring AI agents (Monitor, Analyzer, Remediator).
-    </description>
+    <description>Agentic AI system for automated network security incident response.</description>
 
     <properties>
         <java.version>21</java.version>
         <spring-ai.version>1.0.0</spring-ai.version>
+        <!-- Fixes the Lombok UNKNOWN error on newer JDKs -->
+        <lombok.version>1.18.34</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -38,7 +36,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- ── Spring Boot Core ── -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -52,29 +49,25 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!-- ── Spring AI – Anthropic LLM (Corrected Name) ── -->
+        <!-- Corrected Artifact IDs for Spring AI 1.0.0 -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-model-anthropic</artifactId>
         </dependency>
-
-        <!-- ── Spring AI – MCP Server (Corrected Name) ── -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-mcp-server</artifactId>
         </dependency>
-
-        <!-- ── Spring AI – MCP Client (Corrected Name) ── -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-mcp-client</artifactId>
         </dependency>
 
-        <!-- ── Utilities & Testing ── -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -88,14 +81,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
             </plugin>
         </plugins>
     </build>
