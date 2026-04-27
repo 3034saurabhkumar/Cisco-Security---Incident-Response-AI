@@ -41,6 +41,13 @@ management:
     health:
       show-details: always
 
+# ── Cisco ISE Configuration ──────────────────────────────────────────────
+cisco:
+  ise:
+    url: ${CISCO_ISE_URL:https://ise-node.corp.local:24df443}
+    username: ${CISCO_ISE_USERNAME:admin}
+    password: ${CISCO_ISE_PASSWORD:Cisco123!}
+
 # ── Logging ───────────────────────────────────────────────────────────────
 logging:
   level:
