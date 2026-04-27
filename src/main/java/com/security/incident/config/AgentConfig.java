@@ -14,16 +14,17 @@ import org.springframework.context.annotation.Primary;
  * Spring AI Configuration
  *
  * Key wiring:
- *  1. CiscoIseMcpServer tools (@Tool methods) → MethodToolCallbackProvider
- *  2. ChatClient.Builder gets those tools registered as function callbacks
- *  3. Each Agent gets its own ChatClient configured with the MCP tools
+ * 1. CiscoIseMcpServer tools (@Tool methods) → MethodToolCallbackProvider
+ * 2. ChatClient.Builder gets those tools registered as function callbacks
+ * 3. Each Agent gets its own ChatClient configured with the MCP tools
  *
  * How MCP works here:
- *  - CiscoIseMcpServer is exposed as an MCP server via the
- *    spring-ai-mcp-server-spring-boot-starter (stdio transport by default)
- *  - The @Tool methods are auto-discovered and registered
- *  - Agents use ToolCallbackProvider to make the same tools available
- *    to the ChatClient for in-process tool calling (avoids need for separate process)
+ * - CiscoIseMcpServer is exposed as an MCP server via the
+ * spring-ai-mcp-server-spring-boot-starter (stdio transport by default)
+ * - The @Tool methods are auto-discovered and registered
+ * - Agents use ToolCallbackProvider to make the same tools available
+ * to the ChatClient for in-process tool calling (avoids need for separate
+ * process)
  */
 @Configuration
 public class AgentConfig {
@@ -35,15 +36,15 @@ public class AgentConfig {
     @Bean
     public ToolCallbackProvider ciscoIseTools(CiscoIseMcpServer mcpServer) {
         return MethodToolCallbackProvider.builder()
-            .toolObjects(mcpServer)   // scans for @Tool annotations
-            .build();
+                .toolObjects(mcpServer) // scans for @Tool annotations
+                .build();
     }
 
     /**
      * Base ChatClient.Builder pre-configured with:
-     *  – MCP tools (Cisco ISE simulation)
-     *  – Request/response logging advisor
-     *  – Default system context for all agents
+     * – MCP tools (Cisco ISE simulation)
+     * – Request/response logging advisor
+     * – Default system context for all agents
      */
     @Bean
     @Primary
@@ -52,7 +53,7 @@ public class AgentConfig {
             ToolCallbackProvider ciscoIseTools) {
 
         return ChatClient.builder(chatModel)
-            .defaultTools(ciscoIseTools)              // attach MCP tools
-            .defaultAdvisors(new SimpleLoggerAdvisor()); // log all LLM I/O
+                .defaultToolCallbacks(ciscoIseTools) // attach MCP tools
+                .defaultAdvisors(new SimpleLoggerAdvisor()); // log all LLM I/O
     }
 }
