@@ -81,7 +81,7 @@ public class IncidentController {
 
     /**
      * Server-Sent Events endpoint.
-     * Connect with: curl -N http://localhost:8080/api/incidents/stream
+     * Connect with: curl -N <a href="http://localhost:8080/api/incidents/stream">...</a>
      * Or use EventSource in JavaScript.
      */
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
