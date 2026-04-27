@@ -44,15 +44,13 @@ management:
 # ── Cisco ISE Configuration ──────────────────────────────────────────────
 cisco:
   ise:
-    url: ${CISCO_ISE_URL:https://ise-node.corp.local:24df443}
-    username: ${CISCO_ISE_USERNAME:admin}
-    password: ${CISCO_ISE_PASSWORD:Cisco123!}
+    url: ${CISCO_ISE_URL}
+    username: ${CISCO_ISE_USERNAME}
+    password: ${CISCO_ISE_PASSWORD}
 
 # ── Logging ───────────────────────────────────────────────────────────────
 logging:
   level:
-    root: INFO
-    com.security.incident: DEBUG
-    org.springframework.ai: DEBUG           # See full LLM request/response
-  pattern:
-    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    root: WARN
+    com.security.incident: INFO
+    org.springframework.ai: INFO

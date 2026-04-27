@@ -1,6 +1,8 @@
 spring:
   application:
     name: incident-response-ai
+  profiles:
+    active: dev
 
   # ── Spring AI – Anthropic LLM ──────────────────────────────────────────
   ai:
@@ -53,6 +55,4 @@ logging:
   level:
     root: INFO
     com.security.incident: DEBUG
-    org.springframework.ai: DEBUG           # See full LLM request/response
-  pattern:
-    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    org.springframework.ai: DEBUG
