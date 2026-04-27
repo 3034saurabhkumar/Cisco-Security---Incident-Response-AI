@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: incident-response-ai
+
+  # ── Spring AI – Anthropic LLM ──────────────────────────────────────────
+  ai:
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY}          # Set via env var or .env file
+      chat:
+        options:
+          model: claude-sonnet-4-20250514
+          max-tokens: 4096
+          temperature: 0.1                   # Low temp for deterministic security decisions
+
+    # ── Spring AI MCP Server ─────────────────────────────────────────────
+    # The @Tool-annotated methods on CiscoIseMcpServer are auto-exposed
+    # via stdio transport (default) for external MCP clients.
+    # In this app, we also use them in-process via MethodToolCallbackProvider.
+    mcp:
+      server:
+        name: cisco-ise-mcp-server
+        version: 1.0.0
+        type: SYNC                           # SYNC | ASYNC
+        stdio: true                          # Enable stdio transport
+        sse-message-endpoint: /mcp/messages  # SSE transport endpoint
+        sse-endpoint: /mcp/sse
+
+# ── Server ────────────────────────────────────────────────────────────────
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# ── Actuator ──────────────────────────────────────────────────────────────
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# ── Logging ───────────────────────────────────────────────────────────────
+logging:
+  level:
+    root: INFO
+    com.security.incident: DEBUG
+    org.springframework.ai: DEBUG           # See full LLM request/response
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"

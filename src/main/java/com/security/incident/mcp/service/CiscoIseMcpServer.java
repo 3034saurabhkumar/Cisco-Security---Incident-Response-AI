@@ -63,6 +63,11 @@ public class CiscoIseMcpServer {
     //  Tool 1 – Get Security Logs
     // ─────────────────────────────────────────────────────────────────────
 
+    /**
+     * In a real production environment, you would modify the code in the
+     * getSecurityLogs()
+     *  method to call the Cisco ISE ERS API or pxGrid.
+     */
     @Tool(description = """
         Retrieve recent security log entries from Cisco ISE RADIUS/TACACS audit log.
         Returns authentication events, policy violations, and anomaly alerts.
@@ -88,6 +93,7 @@ public class CiscoIseMcpServer {
     //  Tool 2 – Get Endpoint Status
     // ─────────────────────────────────────────────────────────────────────
 
+    // Check if an IP is a known device or a threat.
     @Tool(description = """
         Query Cisco ISE for the current security posture and profile of an endpoint by IP address.
         Returns quarantine state, compliance tags, threat score, and connected network device.
@@ -126,6 +132,7 @@ public class CiscoIseMcpServer {
     //  Tool 3 – Block Endpoint
     // ─────────────────────────────────────────────────────────────────────
 
+    // Automatically quarantine a suspicious device.
     @Tool(description = """
         Block or quarantine an endpoint in Cisco ISE by IP address.
         This updates the ISE Authorization Policy to assign the endpoint to a quarantine VLAN
@@ -171,6 +178,9 @@ public class CiscoIseMcpServer {
     //  Tool 4 – Test Rule in Sandbox
     // ─────────────────────────────────────────────────────────────────────
 
+    /*
+     * Verify a firewall rule before applying it to avoid breaking business operations.
+     */
     @Tool(description = """
         Validates a proposed Cisco FTD/ASA firewall rule in a sandboxed network replica
         BEFORE pushing it to production. Runs traffic simulation against the rule
@@ -280,6 +290,7 @@ public class CiscoIseMcpServer {
     //  Private helpers
     // ─────────────────────────────────────────────────────────────────────
 
+    // Generate dummy logs to allow for testing and demos without needing a live Cisco ISE lab.
     private List<LogEntry> generateSimulatedLogs(int count) {
         List<LogEntry> logs = new ArrayList<>();
         Random rng = new Random(42);  // deterministic seed for reproducible demos
