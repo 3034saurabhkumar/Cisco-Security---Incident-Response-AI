@@ -3,6 +3,7 @@ package com.security.incident.controller;
 import com.security.incident.events.AgentEvent;
 import com.security.incident.workflow.IncidentReport;
 import com.security.incident.workflow.IncidentResponseWorkflow;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
@@ -30,6 +31,7 @@ import java.util.concurrent.Executors;
  * The SSE stream lets you watch the 3 agents work in real time.
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/incidents")
 @CrossOrigin(origins = "*")
 public class IncidentController {
@@ -41,10 +43,6 @@ public class IncidentController {
 
     // Active SSE connections
     private final CopyOnWriteArrayList<SseEmitter> emitters = new CopyOnWriteArrayList<>();
-
-    public IncidentController(IncidentResponseWorkflow workflow) {
-        this.workflow = workflow;
-    }
 
     // ─────────────────────────────────────────────────────────────────────
     //  1. Trigger the agentic pipeline

@@ -1,5 +1,7 @@
 package com.security.incident.events;
 
+import lombok.Getter;
+
 import java.time.Instant;
 
 /**
@@ -7,6 +9,7 @@ import java.time.Instant;
  * The REST controller streams these as Server-Sent Events (SSE) to the client,
  * giving real-time visibility into the agentic pipeline.
  */
+@Getter
 public class AgentEvent {
 
     private final String  agentName;
@@ -20,11 +23,6 @@ public class AgentEvent {
         this.message   = message;
         this.timestamp = Instant.now();
     }
-
-    public String  getAgentName() { return agentName; }
-    public String  getStatus()    { return status; }
-    public String  getMessage()   { return message; }
-    public Instant getTimestamp() { return timestamp; }
 
     @Override
     public String toString() {
